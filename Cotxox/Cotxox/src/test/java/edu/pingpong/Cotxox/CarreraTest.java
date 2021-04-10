@@ -1,6 +1,8 @@
 package edu.pingpong.Cotxox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +10,14 @@ import org.junit.Before;
 import org.junit.Test;
 import edu.pingpong.Cotxox.carrera.Carrera;
 import edu.pingpong.Cotxox.conductor.Conductor;
+import edu.pingpong.Cotxox.conductor.PoolConductores;
 
 
 public class CarreraTest 
 {
     Carrera carrera;
     Conductor conductor;
-    PoolConductoresTest poolConductoresTest;
+    PoolConductores poolConductores;
     final List<Conductor> conductores = new ArrayList<Conductor>();
     
     @Before
@@ -66,17 +69,40 @@ public class CarreraTest
 
 	@Test
 	public void setConductorTest() {
-        
+        conductor = new Conductor("Francina");
+        conductor = new Conductor("Maria");
+        conductor = new Conductor("Adriá");
+        conductor = new Conductor("Arnau");
+        conductor = new Conductor("Joan");
+        carrera.setConductor(conductor);
+
+        assertEquals(conductor, carrera.getConductor());
+
 	}
 
 
     @Test
 	public void getCosteEsperadoTest() {
-
+		double distancia = 7.75;
+		int minutos = 10;
+		carrera.setDistancia(distancia);
+		carrera.setTiempoEsperado(minutos);
+        double total = distancia * 1.35 + minutos * 0.35;
+        assertEquals(total, carrera.getCosteEsperado(),0);
 	}
 
 	@Test
 	public void asignarConductor() {
+        List<Conductor> poolConductores = new ArrayList<Conductor>();
+        conductor = new Conductor("Francina");
+        conductor = new Conductor("Maria");
+        conductor = new Conductor("Adriá");
+        conductor = new Conductor("Arnau");
+        conductor = new Conductor("Joan");
+        poolConductores.add(conductor);
+		PoolConductores conductores = new PoolConductores(poolConductores);
+        carrera.asignarConductor(conductores);
+        assertTrue(carrera.getConductor().isOcupado());
 
 	}
 
