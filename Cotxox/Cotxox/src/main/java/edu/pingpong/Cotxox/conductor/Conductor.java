@@ -1,6 +1,7 @@
 package edu.pingpong.Cotxox.conductor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Conductor {
 
@@ -9,7 +10,7 @@ public class Conductor {
     private String matricula = null;
     private double valoracionMedia = 0;
     private boolean ocupado = false;
-    private ArrayList<Byte> valoraciones;
+    private List<Byte> valoraciones = new ArrayList<Byte>();
 
     public Conductor(){
 
@@ -46,16 +47,21 @@ public class Conductor {
     }
 
     public int getNumeroValoracion(){
-
+        return this.valoraciones.size();
     }
 
 
     public void setValoracion(byte valoracion){
-
+        this.valoraciones.add(valoracion);
+        this.calcularValoracionMedia();
     }
 
     private double calcularValoracionMedia(){
 
+        this.valoracionMedia = valoraciones.stream().mapToDouble(a -> a).sum();
+
+        return this.valoracionMedia / getNumeroValoracion();
+        
     }
 
     public void setOcupado(boolean ocupado) {
