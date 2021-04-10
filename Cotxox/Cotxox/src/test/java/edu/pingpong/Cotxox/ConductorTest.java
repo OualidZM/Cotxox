@@ -1,5 +1,6 @@
 package edu.pingpong.Cotxox;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,14 +26,18 @@ public class ConductorTest
     @Test
     public void setModeloTest()
     {
-        assertTrue( true );
+        String modelo = "volkswagen caddy";
+        conductor.setModelo(modelo);
+        assertEquals(modelo, conductor.getModelo());
     }
 
 
     @Test
     public void getMatriculaTest()
     {
-        assertTrue( true );
+        String matricula = "KQ9C1S";
+        conductor.setMatricula(matricula);
+        assertEquals(matricula, conductor.getMatricula());
     }
 
     @Test
