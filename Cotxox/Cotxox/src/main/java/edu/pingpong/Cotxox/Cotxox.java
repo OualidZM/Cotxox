@@ -1,124 +1,121 @@
 package edu.pingpong.Cotxox;
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.pingpong.Cotxox.carrera.Carrera;
 import edu.pingpong.Cotxox.conductor.Conductor;
 import edu.pingpong.Cotxox.conductor.PoolConductores;
 
 
+public class Cotxox {
 
-/**
- * Hello world!
- *
- */
-public class Cotxox 
-{
-    public static void main( String[] args )
-    {
+	public static void main(String[] args) {
 
+		/* 
+		 * Configuracion del usuario
+		 * y de la Carrera. 
+		 */
 
-        String tarjetaCredito = "49161197911394546";
-        String origen =  "Aeroport Son Sant Joan";
-        String destino = "Magaluf";
-        double distancia = 7.75;
-        double costeTotal = 13.9625;
+		String tarjetaCredito = "4916119711304546";
+		String origen = "Aeroport Son Sant Joan";
+		String destino = "Magaluf";
+		double distancia = 7.75;
+		int tiempoEsperadoMinutos = 10;
 
+		Carrera carrera = new Carrera(tarjetaCredito);
+		carrera.setOrigen(origen);
+		carrera.setDestino(destino);
+		carrera.setDistancia(distancia);
+		carrera.setTiempoEsperado(tiempoEsperadoMinutos);
 
-        
-        Carrera carrera = new Carrera(tarjetaCredito);
-        carrera.setOrigen(origen);
-        carrera.setDestino(destino);
-        carrera.setDistancia(distancia);
-        carrera.setCosteTotal(costeTotal);
+		System.out.println("\n#####" + "\t Set Pickup: \t" + "#####\n");
 
-        String nombre = "Samantha";
-        String modelo = "Chevy Malibu";
-        String matricula = "4ABC123";
-        double valoracionMedia = 4.0;
+		System.out.println("Visa: " + carrera.getTarjetaCredito());
+		System.out.println("From: " + carrera.getOrigen());
+		System.out.println("To: " + carrera.getDestino());
+		System.out.println("Distance: " + carrera.getDistancia());
 
-        boolean ocupado = false;
+		System.out.println("\n#####" + "\t See your Cost: \t" + "#####\n");
 
-        Conductor conductor = new Conductor();
-        conductor.setNombre(nombre);
-        conductor.setModelo(modelo);
-        conductor.setMatricula(matricula);
-        conductor.setValoracionMedia(valoracionMedia);
-        conductor.setOcupado(ocupado);
+		System.out.println("Visa: " + carrera.getTarjetaCredito());
+		System.out.println("From: " + carrera.getOrigen());
+		System.out.println("To: " + carrera.getDestino());
+		System.out.println("Distance: " + carrera.getDistancia());
+		System.out.println("Total: " + carrera.getCosteEsperado() + "€");
 
-        System.out.println("#####" + "\t" + "Set Pickup:" + "\t" + "#####");
+		System.out.println("\n#####" + "\t Get a ride: Driver: \t" + "#####\n");
 
-        System.out.println(
-  
+		/**
+		 * Necesitamos crear la flota de conductores de donde seleccionar uno
+		 * para ofrecer el servicio.
+		 * La flota es un objeto de tipo PoolConductores.
+		 */
 
-        "Visa: "+ carrera.getTarjetaCredito() +"\n"+
-        "From: "+ carrera.getOrigen() + "\n"+
-        "To: "+ carrera.getDestino() +"\n"+
-        "Distancia:" + carrera.getDistancia()
-        );
+		List<Conductor> poolConductores = new ArrayList<Conductor>();
+		Conductor conductor = null;
 
+		// creamos objetos conductor y los metemos en el array
 
+		String[] nombres = { "Samantha", "Fox", "Mola" };
+		for (String nombre : nombres) {
+			conductor = new Conductor(nombre);
+			poolConductores.add(conductor);
+		}
 
-        System.out.println("#####" + "\t" + "See your Cost:" + "\t" + "#####");
+		String[] matricula = { "4ABC123", "5DHJ444", "7JKK555" };
+		String[] modelos = { "Chevy Malibu", "Toyota Prius", "Mercedes A" };
 
-        System.out.println(
+		int index = 0;
+		for (Conductor conductora : poolConductores) {
+			conductora.setMatricula(matricula[index]);
+			conductora.setModelo(modelos[index]);
+			// suponemos que las conductoras tienen una valoracion inicial de 4 stars
+			conductora.setValoracion((byte) 4);
+			index++;
+		}
 
-        "Visa:"+ carrera.getTarjetaCredito() +"\n"+
-        "From:"+ carrera.getOrigen()+ "\n"+
-        "To:"+ carrera.getDestino() +"\n"+   
-        "Distancia:"+ carrera.getDistancia() +"\n"+
-        "Total: " + carrera.getCosteTotal()
-        );
+		// Creamos el objeto flota de conductores, de la clase PoolConductores.
 
+		PoolConductores conductores = new PoolConductores(poolConductores);
 
+		/* Seleccion del conductor en la flota y asignacion a la carrera */
 
+		carrera.asignarConductor(conductores);
 
+		// Info por pantalla
 
-        // Conductor conductor = new Conductor();
-        // conductor.getNombre();
-        // conductor.
+		System.out.println("Driver: " + carrera.getConductor().getNombre());
+		System.out.println("Type: " + carrera.getConductor().getModelo());
+		System.out.println("Matricula: " + carrera.getConductor().getMatricula());
+		System.out.println("Stars: " + carrera.getConductor().getValoracion());
+		System.out.println("From: " + carrera.getOrigen());
+		System.out.println("To: " + carrera.getDestino());
+		boolean ocupado = carrera.getConductor().isOcupado();
+		if (ocupado) {
+			System.out.println("Disponible para ti");
+		} else {
+			System.out.println("Esta conductora no esta disponible :/");
+		}
+		// cancel ride
+		// contact by phone		
 
+		System.out.println("\n#####" + "\t Pay and Tip: \t" + "#####\n");
 
+		carrera.realizarPago(carrera.getCosteEsperado());
+		carrera.recibirPropina(1);
+		carrera.liberarConductor();
 
-        System.out.println("#####" + "\t" + "Get a ride:Driver:" + "\t" + "#####");
+		System.out.println("Driver: " + carrera.getConductor().getNombre());
+		System.out.println("TIP: " + carrera.getPropina());
+		System.out.println("Visa: " + carrera.getTarjetaCredito());
+		System.out.println("Total: " + carrera.getCosteTotal());
+		System.out.println("Ocupado?: " + carrera.getConductor().isOcupado());
 
-        System.out.println(
+		System.out.println("\n#####" + "\t Rate your driver: \t" + "#####\n");
 
-            "Driver: "+ conductor.getNombre() +"\n"+
-            "Type: "+ conductor.getNombre() +"\n"+
-            "Matricula: "+ conductor.getMatricula() +"\n"+
-            "Starts:"+ conductor.getValoracion() +"\n"+
-            "From: "+ carrera.getOrigen() +"\n"+
-            "To:"+ carrera.getDestino() +"\n"+
-            "Disponible para ti"
-        );
+		carrera.getConductor().setValoracion((byte) 5);
 
-
-        // conductor.setNombre(nombre);
-        // conductor.setModelo(modelo);
-        // conductor.setMatricula(matricula);
-        // conductor.setValoraciones(valoraciones);
-        
-
-
-
-        System.out.println("#####" + "\t" + "Pay and Tip:" + "\t" + "#####");
-        
-        System.out.println(
-        "Driver: "+ conductor.getNombre()+"\n"+
-        "TIP: "+ "\n"+
-        "Visa: "+ carrera.getTarjetaCredito() + "\n"+
-        "Total:"+ carrera.getCosteTotal() + "\n"+
-        "Ocupado?:" + conductor.isOcupado()
-        );
-
-
-        System.out.println("#####" + "\t" + "Rate your drive:" + "\t" + "#####");
-
-        System.out.println(
-
-            "Driver: "+ conductor.getNombre()+"\n"+
-            "Starts:" + conductor.getValoracionMedia()
-        );
-        
-    }
-
-
+		System.out.println("Driver: " + carrera.getConductor().getNombre());
+		System.out.println("Stars: " + carrera.getConductor().getValoracion());
+	}
 }
