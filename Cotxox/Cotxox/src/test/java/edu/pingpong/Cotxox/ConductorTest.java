@@ -1,6 +1,7 @@
 package edu.pingpong.Cotxox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,16 @@ public class ConductorTest
 
     }
 
-    
+    @Test
+    public void getNombreTest()
+    {
+        String primerNombre = "Antonio" ;
+        conductor = new Conductor(primerNombre);
+        assertEquals(primerNombre, conductor.getNombre());
+
+    }
+
+
     @Test
     public void setModeloTest()
     {
@@ -43,25 +53,47 @@ public class ConductorTest
     @Test
     public void getValoracionTest()
     {
-        assertTrue( true );
+        byte valoracion = 55;
+        conductor.setValoracion(valoracion);
+        assertEquals(valoracion, conductor.getValoracion(),0);
     } 
     
     @Test
     public void getNumeroValoracionTest()
     {
-        assertTrue( true );
+        byte PrimeraValoracion = 55;
+        byte SegundaValoracion = 65;
+        byte TerceraValoracion = 75;
+        byte CuartaValoracion = 85;
+        byte QuintaValoracion = 85;
+        
+        conductor.setValoracion(PrimeraValoracion);
+        conductor.setValoracion(SegundaValoracion);
+        conductor.setValoracion(TerceraValoracion);
+        conductor.setValoracion(CuartaValoracion);
+        conductor.setValoracion(QuintaValoracion);
+
+        assertEquals(5, conductor.getNumeroValoracion());
+
+
+
     }
 
     @Test
-    public void getOcupadoTest()
+    public void setOcupadoTest()
     {
-        assertTrue( true );
+        conductor.setOcupado(true);
+        assertTrue(true);
+
+        conductor.setOcupado(false);
+        assertFalse(false);
     }
 
     @Test
     public void isOcupadoTest()
     {
-        assertTrue( true );
+        conductor.isOcupado();
+        assertTrue(true);
     }
 
 }
