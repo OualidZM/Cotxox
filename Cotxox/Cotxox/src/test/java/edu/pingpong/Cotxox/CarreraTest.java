@@ -1,6 +1,7 @@
 package edu.pingpong.Cotxox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -108,16 +109,20 @@ public class CarreraTest
 
 	@Test
 	public void realizarPagoTest() {
-
+        double pago = 5;
+        carrera.realizarPago(pago);
+        assertEquals(pago, carrera.getCosteTotal(),0);
 	}
 
 	@Test
 	public void liberarConductor() {
-
-	}
-
-	@Test
-	public void setValoracion() {
-
-	}
+        conductor = new Conductor("Francina");
+        conductor = new Conductor("Maria");
+        conductor = new Conductor("Adriá");
+        conductor = new Conductor("Arnau");
+        conductor = new Conductor("Joan");
+        carrera.setConductor(conductor);
+        carrera.liberarConductor();
+        assertFalse(conductor.isOcupado());
+    }
 }
