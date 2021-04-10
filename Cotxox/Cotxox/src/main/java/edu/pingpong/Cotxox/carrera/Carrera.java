@@ -2,6 +2,7 @@ package edu.pingpong.Cotxox.carrera;
 
 import edu.pingpong.Cotxox.conductor.Conductor;
 import edu.pingpong.Cotxox.conductor.PoolConductores;
+import edu.pingpong.Cotxox.tarifa.Tarifa;
 
 public class Carrera {
     
@@ -49,7 +50,7 @@ public class Carrera {
     }
 
     public double getCosteEsperado(){
-        //
+        return Tarifa.getCosteTotalEsperado(this);
     }
 
     public int getTiempoEsperado() {
@@ -78,11 +79,12 @@ public class Carrera {
     }
 
     public void asignarConductor(PoolConductores conductores){
-        //
+        setConductor(conductores.asignarConductor());
+        
     }
 
     public void realizarPago(double pago){
-
+        this.costeTotal = pago;
     }
 
 
@@ -91,13 +93,13 @@ public class Carrera {
     }
 
     public void recibirPropina(int propina){
-        //
+        this.propina = propina;
     }
     public int getPropina() {
         return propina;
     }
 
     public void liberarConductor(){
-        //
+        conductor.setOcupado(false);
     }
 }
